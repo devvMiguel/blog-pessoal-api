@@ -32,5 +32,9 @@ services:
       db:
         condition: service_healthy
 
+    volumes:
+      - .:/app
+      - /app/node_modules
+k
 volumes:
   mysql_data:

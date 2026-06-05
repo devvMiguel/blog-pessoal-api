@@ -29,6 +29,55 @@ Este projeto é uma API REST desenvolvida com **NestJS**, com foco em autentica�
 
 ---
 
+## 🐳 Como Executar Localmente (com Docker)
+
+A aplicação está conteinerizada, o que significa que você não precisa instalar o MySQL ou o Node.js localmente na sua máquina para rodar o projeto. O Docker cuidará de todo o ambiente de forma automática.
+
+### 1. Clone o repositório
+
+```bash
+git clone [https://github.com/devvMiguel/blog-pessoal.git](https://github.com/devvMiguel/blog-pessoal.git)
+cd blog-pessoal
+```
+
+### 2. Configure o ambiente para Desenvolvimento
+
+Antes de subir os containers, certifique-se de que a aplicação está configurada para olhar para o banco de dados local. 
+No arquivo `src/app.module.ts`, confirme que o `TypeOrmModule` está utilizando o `DevService`:
+
+```typescript
+TypeOrmModule.forRootAsync({
+  useClass: DevService,
+  imports: [ConfigModule],
+}),
+```
+
+### 3. Inicie a aplicação com Docker Compose
+
+Construa a imagem e suba os containers do banco de dados e da API em segundo plano:
+
+```bash
+docker compose up -d --build
+```
+> **Nota:** A flag `--build` garante que o Docker leia as alterações mais recentes feitas no seu código, como a configuração do `DevService` acima.
+
+### 4. Acesse a API
+
+Quando os containers estiverem rodando, a API estará disponível em:  
+📍 `http://localhost:4000`
+
+---
+
+### 🛑 Como parar a aplicação
+
+Para derrubar os containers quando terminar de usar, basta rodar no terminal na raiz do projeto:
+
+```bash
+docker compose down
+```
+
+---
+
 ## 🛠️ Como Executar Localmente com MySQL
 
 ### 1. Clone o repositório
@@ -47,6 +96,8 @@ npm install
 ### 3. Configure o banco de dados MySQL
 
 Crie um banco de dados MySQL local chamado `blog_pessoal` ou outro nome de sua escolha.
+
+### OBS: Para rodar local altere para DevService no app.module.
 
 ### 4. Inicie o servidor
 
